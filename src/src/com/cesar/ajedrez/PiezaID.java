@@ -1,6 +1,8 @@
 package src.com.cesar.ajedrez;
 
-public record PiezaID(String id){
+import java.io.Serializable;
+
+public record PiezaID(String id) implements Serializable {
     public static PiezaID Torre = new PiezaID("torre");
     public static PiezaID Caballo = new PiezaID("caballo");
     public static PiezaID Alfil = new PiezaID("alfil");

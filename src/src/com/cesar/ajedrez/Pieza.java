@@ -1,6 +1,8 @@
 package src.com.cesar.ajedrez;
 
-public class Pieza {
+import java.io.Serializable;
+
+public class Pieza implements Serializable {
     private final PiezaID id;
     private final boolean bando;
     private boolean primerMove;

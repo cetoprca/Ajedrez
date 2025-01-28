@@ -3,9 +3,9 @@ package src.com.cesar.ajedrez;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Logica extends Tablero{
+public class Logica{
     //Movimiento basico vertical y horizontal sin limite
-    public static List<int[]> legalMoveVERyHOR(int[] Opos, int[] Dpos){
+    public static List<int[]> legalMoveVERyHOR(int[] Opos, int[] Dpos, Pieza[][] tablero2d){
         List<int[]> legalMoves = new ArrayList<>();
 
         int repeticiones = 0;
@@ -68,7 +68,7 @@ public class Logica extends Tablero{
     }
 
     //Movimiento basico en diagonal sin limite
-    public static List<int[]> legalMoveDIAGONAL(int[] Opos, int[] Dpos){
+    public static List<int[]> legalMoveDIAGONAL(int[] Opos, int[] Dpos, Pieza[][] tablero2d){
         List<int[]> legalMoves = new ArrayList<>();
         
         int repeticiones = 0;
@@ -118,7 +118,7 @@ public class Logica extends Tablero{
     }
 
     //Movimiento basico vertical y horizontal con limite
-    public static List<int[]> legalMoveVERyHOR(int[] Opos, int[] Dpos, int limit){
+    public static List<int[]> legalMoveVERyHOR(int[] Opos, int[] Dpos, int limit, Pieza[][] tablero2d){
         List<int[]> legalMoves = new ArrayList<>();
 
         int constante = 1;
@@ -165,7 +165,7 @@ public class Logica extends Tablero{
     }
 
     //Movimiento basico en diagonal con limite
-    public static List<int[]> legalMoveDIAGONAL(int[] Opos, int[] Dpos, int limit){
+    public static List<int[]> legalMoveDIAGONAL(int[] Opos, int[] Dpos, int limit, Pieza[][] tablero2d){
         List<int[]> legalMoves = new ArrayList<>();
 
         int constante1 = 1;
@@ -201,16 +201,16 @@ public class Logica extends Tablero{
 
     //Funciones especificas
 
-    public static List<int[]> legalMoveRey(int[] Opos, int[] Dpos){
+    public static List<int[]> legalMoveRey(int[] Opos, int[] Dpos, Pieza[][] tablero2d){
         List<int[]> legalMoves = new ArrayList<>();
 
-        legalMoves.addAll(legalMoveVERyHOR(Opos, Dpos, 1));
-        legalMoves.addAll(legalMoveDIAGONAL(Opos, Dpos, 1));
+        legalMoves.addAll(legalMoveVERyHOR(Opos, Dpos, 1, tablero2d));
+        legalMoves.addAll(legalMoveDIAGONAL(Opos, Dpos, 1, tablero2d));
 
         return legalMoves;
     }
 
-    public static List<int[]> legalMovePeon(int[] pos){
+    public static List<int[]> legalMovePeon(int[] pos, Pieza[][] tablero2d){
         List<int[]> legalMoves = new ArrayList<>();
 
         if (!tablero2d[pos[0]][pos[1]].isBando()){
@@ -319,7 +319,7 @@ public class Logica extends Tablero{
         return legalMoves;
     }
 
-    public static List<int[]> legalMoveCaballo(int[] pos){
+    public static List<int[]> legalMoveCaballo(int[] pos, Pieza[][] tablero2d){
         List<int[]> legalMoves = new ArrayList<>();
 
         //Movimientos hard codeados
