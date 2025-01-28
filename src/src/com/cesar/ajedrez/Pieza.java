@@ -1,8 +1,8 @@
 package src.com.cesar.ajedrez;
 
 public class Pieza {
-    private PiezaID id;
-    private boolean bando;
+    private final PiezaID id;
+    private final boolean bando;
     private boolean primerMove;
 
     public Pieza(PiezaID id, boolean bando, boolean primerMove) {

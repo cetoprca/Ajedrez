@@ -1,13 +1,12 @@
 package src.com.cesar.ajedrez;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Tablero {
-    protected static int size;
+    protected int size;
     protected static Pieza[][] tablero2d;
+    public static boolean jugadorActivo = true;
+    public static boolean fin = false;
 
     public Tablero(int size) {
         this.size = size;
@@ -49,9 +48,11 @@ public class Tablero {
                     }
                     case 6 -> tablero2d[i][j] = new Pieza(PiezaID.Peon, true);
                 }
+                if (i > 1 && i < 6){
+                    tablero2d[i][j] = null;
+                }
             }
         }
-        show();
     }
 
     public void move(int Ofila, int Ocolumna, int Dfila, int Dcolumna){
@@ -63,6 +64,10 @@ public class Tablero {
             piezaOrigen = tablero2d[coordOrigen[0]][coordOrigen[1]];
         }catch (NullPointerException _){
             System.out.println("No se ha encontrado ninguna pieza en la casilla seleccionada");
+        }
+        Pieza piezaDestino = null;
+        if (tablero2d[coordDestino[0]][coordDestino[1]] != null){
+            piezaDestino = tablero2d[coordDestino[0]][coordDestino[1]];
         }
 
         List<int[]> posLegal = new ArrayList<>();
@@ -136,12 +141,29 @@ public class Tablero {
                     }
                 }
             }
+            if (piezaOrigen.getId() == PiezaID.Peon) {
+                if (piezaDestino != null){
+                    if (piezaDestino.getId() == PiezaID.PeonPassant) {
+                        if (coordDestino[1] < coordOrigen[1]) {
+                            tablero2d[coordOrigen[0]][coordOrigen[1]-1] = null;
+                        }else tablero2d[coordOrigen[0]][coordOrigen[1]+1] = null;
+                    }
+                }
+            }
             if (piezaOrigen.getId() == PiezaID.Peon && (coordDestino[0] == 0 || coordDestino[0] == 7)){
                 promocion(coordDestino[0], coordDestino[1], piezaOrigen.isBando());
             }
 
             tablero2d[coordDestino[0]][coordDestino[1]].setPrimerMove(false);
-            Main.jugadorActivo = !Main.jugadorActivo;
+
+            if (piezaDestino != null){
+                if (piezaDestino.getId().id().equals("rey")){
+                    System.out.println(piezaOrigen.isBando() ? "El bando Blanco gana!" : "El bando Negro gana!");
+                    fin = true;
+                }
+            }
+
+            jugadorActivo = !jugadorActivo;
         }
 
         show();
@@ -170,13 +192,12 @@ public class Tablero {
     }
 
     public void show(){
-        for (int i = 0; i < tablero2d.length; i++) {
-            String msg = "";
+        for (Pieza[] piezas : tablero2d) {
+            StringBuilder msg = new StringBuilder();
             for (int j = 0; j < tablero2d.length; j++) {
-                if (tablero2d[i][j] == null){
-                    msg += "[] ";
-                }
-                else msg += tablero2d[i][j] + " ";
+                if (piezas[j] == null) {
+                    msg.append("[] ");
+                } else msg.append(piezas[j]).append(" ");
             }
             System.out.println(msg);
         }
