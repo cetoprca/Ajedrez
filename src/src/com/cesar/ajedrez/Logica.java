@@ -70,7 +70,7 @@ public class Logica{
     //Movimiento basico en diagonal sin limite
     public static List<int[]> legalMoveDIAGONAL(int[] Opos, int[] Dpos, Pieza[][] tablero2d){
         List<int[]> legalMoves = new ArrayList<>();
-        
+
         int repeticiones = 0;
         int constante1 = 1;
         int constante2 = 1;
@@ -128,7 +128,11 @@ public class Logica{
             constante = -1;
         }
 
-        for (int i = 1; i < limit; i++) {
+        for (int i = 1; i < limit+1; i++) {
+            if (Opos[0]+(i*constante) < 0 || Opos[0]+(i*constante) > 7){
+                continue;
+            }
+
             if (tablero2d[Opos[0]+(i*constante)][Opos[1]] == null){
                 int[] Cpos = {Opos[0]+(i*constante), Opos[1]};
                 legalMoves.add(Cpos);
@@ -148,7 +152,11 @@ public class Logica{
             constante = -1;
         }
 
-        for (int i = 1; i < limit; i++) {
+        for (int i = 1; i < limit+1; i++) {
+            if (Opos[1]+(i*constante) < 0 || Opos[1]+(i*constante) > 7){
+                continue;
+            }
+
             if (tablero2d[Opos[0]][Opos[1]+(i*constante)] == null){
                 int[] Cpos = {Opos[0], Opos[1]+(i*constante)};
                 legalMoves.add(Cpos);
@@ -183,6 +191,9 @@ public class Logica{
         }
 
         for (int i = 1; i < limit+1; i++) {
+            if (Opos[0]+(i*constante1) > 7 || Opos[1]+(i*constante2) > 7 || Opos[0]+(i*constante1) < 0 || Opos[1]+(i*constante2) < 0){
+                continue;
+            }
 
             if (tablero2d[Opos[0]+(i*constante1)][Opos[1]+(i*constante2)] == null){
                 int[] Cpos = {Opos[0]+(i*constante1), Opos[1]+(i*constante2)};
