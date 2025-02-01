@@ -28,12 +28,12 @@ public class Logica{
                 legalMoves.add(Cpos);
                 continue;
             }
-            //Si la casilla contiene pieza del bando contrario añade la posicion como legal y termina el bucle
+            //Si la casilla contiene pieza acaba el bucle, si es del bando contrario añade la posicion como legal
             if (tablero2d[Opos[0]+(i*constante)][Opos[1]].isBando() != tablero2d[Opos[0]][Opos[1]].isBando()){
                 int[] Cpos = {Opos[0]+(i*constante), Opos[1]};
                 legalMoves.add(Cpos);
-                break;
             }
+            break;
         }
 
         repeticiones = 0;
@@ -60,8 +60,8 @@ public class Logica{
             if (tablero2d[Opos[0]][Opos[1]+(i*constante)].isBando() != tablero2d[Opos[0]][Opos[1]].isBando()){
                 int[] Cpos = {Opos[0], Opos[1]+(i*constante)};
                 legalMoves.add(Cpos);
-                break;
             }
+            break;
         }
 
         return legalMoves;
